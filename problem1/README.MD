@@ -56,11 +56,38 @@ PING google.com (172.217.4.110) 56(84) bytes of data.
 rtt min/avg/max/mdev = 19.282/19.334/19.361/0.178 ms
 
 
-5. Look at arp table: (two other clicents on broadcast domain and the gateway, one client has a auto IP which it probally shouldn't)
+5. Look at arp table: (two other IPs ARPing on broadcast domain and the gateway and gateway is arping with an autoIP)
 
 [ec2-user@ip-10-0-0-161 ~]$ arp -a
 ? (10.0.0.191) at 02:7e:d2:78:b8:16 [ether] on eth0
 ? (169.254.169.254) at 02:a1:e6:5e:fc:8e [ether] on eth0
 ? (10.0.0.140) at 02:06:dc:29:68:88 [ether] on eth0
 gateway (10.0.0.1) at 02:a1:e6:5e:fc:8e [ether] on eth0
+
+6. Look at DNS (successful but an error on the primary server)
+
+[ec2-user@ip-10-0-0-161 ~]$ nslookup google.com
+;; Got recursion not available from 10.0.0.191, trying next server
+Server:         10.0.0.140
+Address:        10.0.0.140#53
+
+Non-authoritative answer:
+Name:   google.com
+Address: 172.217.4.206
+
+
+7. Ping primary DNS server at 10.0.0.191 (failed)
+
+[ec2-user@ip-10-0-0-161 ~]$ ping 10.0.0.191
+PING 10.0.0.191 (10.0.0.191) 56(84) bytes of data.
+^C
+--- 10.0.0.191 ping statistics ---
+26 packets transmitted, 0 received, 100% packet loss, time 25608ms
+
+
+
+
+CONCLUSION: Based on my troublshooting it looks like something is wrong with the primary DNS server (10.0.0.191) in this envirmoent,
+but I do question why the clients aren't just using the secondary server as it was configured properly on the client I tested on. 
+
 
