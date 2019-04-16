@@ -87,7 +87,7 @@ PING 10.0.0.191 (10.0.0.191) 56(84) bytes of data.
 
 
 
-CONCLUSION: Based on my troublshooting it looks like something is wrong with the primary DNS server (10.0.0.191) in this envirmoent,
+CONCLUSION: Based on my troublshooting it looks like something is wrong with the primary DNS server (10.0.0.191) in this environment,
 but I do question why the clients aren't just using the secondary server as it was configured properly on the client I tested on. 
 
 
